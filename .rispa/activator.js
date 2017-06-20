@@ -13,7 +13,7 @@ const activator = on => {
   on(init(build), initHandler)
   on(init(server), initHandler)
 
-  on(start(build), (command, registry) => {
+  on(start(build), registry => {
     runBuild(registry.get('webpack.client'))
   })
 }
