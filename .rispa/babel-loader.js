@@ -14,7 +14,7 @@ const getBabelLoader = () => {
   return {
     test: /\.js[x]?$/,
     exclude: /node_modules/,
-    loader: `${babelLoader}`,
+    loader: babelLoader,
     options: babelrcConfig,
   }
 }
