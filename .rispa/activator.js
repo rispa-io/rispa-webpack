@@ -10,7 +10,7 @@ const activator = on => {
     const webpackCommon = webpackExtensionCommon(registry)
     registry.add('webpack.common', webpackCommon)
     registry.add('webpack.client', webpackCommon, webpackExtensionClient)
-    registry.add('babel', () => getBabelOptions())
+    registry.add('babel', getBabelOptions)
   }
 
   on(init(build), initHandler)
