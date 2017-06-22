@@ -1,21 +1,14 @@
-import getBabelrcConfig from '@rispa/core/babel'
+import { createConfig } from '@webpack-blocks/webpack2'
 
-const getBabelLoader = () => {
-  const babelrcConfig = getBabelrcConfig()
-
-  // add react-hot-loader/babel to babel plugins
-  if (process.env.NODE_ENV === 'development') {
-    const hotLoaderPlugin = require.resolve('react-hot-loader/babel')
-    babelrcConfig.plugins.push(hotLoaderPlugin)
-  }
-
-  const babelLoader = require.resolve('babel-loader')
+const getBabelLoader = registry => {
+  const babelConfig = createConfig.vanilla(registry.get('babel'))
+  delete babelConfig.module
 
   return {
     test: /\.js[x]?$/,
     exclude: /node_modules/,
-    loader: babelLoader,
-    options: babelrcConfig,
+    loader: require.resolve('babel-loader'),
+    options: babelConfig,
   }
 }
 

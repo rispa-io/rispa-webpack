@@ -1,13 +1,16 @@
 import { init, start, build } from '@rispa/core/events'
 import { server } from '@rispa/server/events'
 import runBuild from '../src/build'
+import getBabelOptions from './babel-options'
 import webpackExtensionCommon from './common.wpc'
 import webpackExtensionClient from './client.wpc'
 
 const activator = on => {
   const initHandler = registry => {
-    registry.add('webpack.common', webpackExtensionCommon)
-    registry.add('webpack.client', webpackExtensionCommon, webpackExtensionClient)
+    const webpackCommon = webpackExtensionCommon(registry)
+    registry.add('webpack.common', webpackCommon)
+    registry.add('webpack.client', webpackCommon, webpackExtensionClient)
+    registry.add('babel', () => getBabelOptions())
   }
 
   on(init(build), initHandler)
