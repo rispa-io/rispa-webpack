@@ -8,7 +8,7 @@ export default () => createConfig([
     plugins: [
       new CleanWebpackPlugin([config.outputPath.split(path.sep).pop()], {
         exclude: ['activators.json'],
-        root: path.dirname(config.outputPath)
+        root: path.dirname(config.outputPath),
       }),
       new context.webpack.optimize.CommonsChunkPlugin({
         names: ['bootstrap'],

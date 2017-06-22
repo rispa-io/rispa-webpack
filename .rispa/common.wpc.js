@@ -6,7 +6,7 @@ export default context => ({
   context: path.resolve(__dirname, '..'),
   output: {
     path: config.outputPath,
-    filename: '[name]-[hash].js',
+    filename: '[name]-[chunkhash].js',
     chunkFilename: '[name]-[chunkhash].js',
     publicPath: config.publicPath,
   },
