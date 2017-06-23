@@ -1,19 +1,13 @@
 import path from 'path'
 import config from '@rispa/config'
-import getBabelLoader from './babel-loader'
 
-export default registry => context => ({
+export default context => ({
   context: path.resolve(__dirname, '..'),
   output: {
     path: config.outputPath,
     filename: '[name]-[chunkhash].js',
     chunkFilename: '[name]-[chunkhash].js',
     publicPath: config.publicPath,
-  },
-  module: {
-    rules: [
-      getBabelLoader(registry),
-    ],
   },
   plugins: [
     new context.webpack.NamedModulesPlugin(),
