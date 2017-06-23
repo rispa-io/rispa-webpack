@@ -2,7 +2,7 @@ import path from 'path'
 import config from '@rispa/config'
 import getBabelLoader from './babel-loader'
 
-export default context => ({
+export default registry => context => ({
   context: path.resolve(__dirname, '..'),
   output: {
     path: config.outputPath,
@@ -12,7 +12,7 @@ export default context => ({
   },
   module: {
     rules: [
-      getBabelLoader(),
+      getBabelLoader(registry),
     ],
   },
   plugins: [

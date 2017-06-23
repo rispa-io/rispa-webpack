@@ -7,8 +7,7 @@
     "@rispa/eslint-config": "^1.0.0",
     "@webpack-blocks/webpack2": "^0.4.0",
     "webpack-dev-middleware": "^1.10.2",
-    "webpack-hot-middleware": "^2.18.0",
-    "react-hot-loader": "^3.0.0-beta.6"
+    "webpack-hot-middleware": "^2.18.0"
   },
   "dependencies": {
     "@rispa/config": "^0.1.0",
@@ -20,10 +19,22 @@
     "debug": "^2.6.6",
     "express": "^4.15.2",
     "webpack": "^2.4.1",
-    "clean-webpack-plugin": "0.1.16"
+    "clean-webpack-plugin": "0.1.16",
+    "babel-plugin-dynamic-import-webpack": "^1.0.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-display-name": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-react": "^6.24.1"
   },
   "scripts": {
-    "build": "better-npm-run build"
+    "build": "better-npm-run build",
+    "lint": "rispa-eslint",
+    "lint:fix": "rispa-eslint --fix"
   },
   "betterScripts": {
     "build": {
