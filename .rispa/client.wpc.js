@@ -12,7 +12,7 @@ export default () => createConfig([
       }),
       new context.webpack.optimize.CommonsChunkPlugin({
         names: ['bootstrap'],
-        filename: '[name].js',
+        filename: '[name]-[hash].js',
         minChunks: Infinity,
       }),
     ],
