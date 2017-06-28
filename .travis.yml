@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+  - "stable"
+
+sudo: false
+
+install:
+  - yarn global add https://github.com/rispa-io/rispa-test-utils.git#feature/initial-impl
+
+script:
+  - ris-test-utils init
+  - ris-test-utils run webpack build
+
+cache:
+  yarn: true
