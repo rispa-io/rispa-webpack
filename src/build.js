@@ -10,6 +10,7 @@ const printErrors = (summary, errors) => {
   errors.forEach(err => {
     logError(err.message || err)
   })
+
 }
 
 const build = webpackConfig => {
