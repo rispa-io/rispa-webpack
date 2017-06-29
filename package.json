@@ -21,9 +21,9 @@
     "webpack": "^2.4.1"
   },
   "peerDependencies": {
-    "@rispa/client": "^0.1.0",
-    "@rispa/redux": "^0.1.0",
-    "@rispa/webpack-javascript": "^0.1.0"
+    "@rispa/client": "^1.0.0",
+    "@rispa/redux": "^1.0.0",
+    "@rispa/webpack-javascript": "^1.0.0"
   },
   "scripts": {
     "build": "better-npm-run build",
