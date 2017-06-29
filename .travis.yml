@@ -9,7 +9,7 @@ git:
   depth: 1
 
 install:
-  - yarn global add https://github.com/rispa-io/rispa-test-utils.git#feature/initial-impl --prefix $(npm config get prefix)
+  - yarn global add https://github.com/rispa-io/rispa-test-utils.git#feature/initial-impl
 
 script:
   - ris-test-utils init
@@ -20,4 +20,3 @@ cache:
 
   directories:
       - $TRAVIS_BUILD_DIR/../rispa-project
-      - $(npm config get prefix)/bin/@rispa/test-utils
