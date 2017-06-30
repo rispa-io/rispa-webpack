@@ -9,7 +9,7 @@ const activator = on => {
   const initHandler = registry => {
     registry.add('webpack.common', webpackExtensionCommon)
     registry.add('webpack.client', webpackExtensionCommon, webpackExtensionClient)
-    registry.add('devServer', devServer)
+    registry.set('devServer', devServer)
   }
 
   on(init(build), initHandler)
