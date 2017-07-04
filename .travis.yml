@@ -1,0 +1,30 @@
+language: node_js
+
+node_js:
+  - "stable"
+
+sudo: false
+
+git:
+  depth: 1
+
+install:
+  - yarn global add @rispa/test-utils@latest
+
+script:
+  - ris-test-utils init
+  - ris-test-utils run webpack lint
+
+notifications:
+  slack:
+    rooms:
+      - secure: "GQ+lkYPVigjlgvOQyk7CFPtnaMg8skisyZX4naQF3oN73fC3KftKe0ddyeMp/ke7I3CSVK/XEpNoQpMrMEtPTgiXLs1jCVTNRYdbtN7VKnhz/q75Secl54IkqE/bkq/jUnfr7CgUnKcK3rVXH7JwsyF/EvKkaGklUlvabuT68RJNCdZO8LnVa66LQJZElowHKnStsxTpMya7aaCrBaBbYo6nh8hoM69iKBom/QIAtzD+em6QP5fovuBAH2QhR2OS3Lg+rboq1X2vHz4iryzjGbYc/ZKNjCwAU9VvTDkWfE32adzfzzMGU6wddcsl5N2YvKZJav3yynmN0gjmk6yNdQMyd5O0p5A0yCaauUu9Q8ESb3nIOIiuUCuyCRLuHJtiDQk8PKNFxjm2JNk36bvz4VONoKesbOKFXCuVQ4Hwv171LKZoUvhxrBpfEOPGHPhvuFa+ikb4r43ujKAl54SqMR4MC14A2QXUhiif3/6uWmNY43oyQOtuPNQk5tCfTksjudN5j6+t0Ee2lIwVN2zbuTcM+mXr9pNo+ZjwXwZkK+1oaTKQtl+bD31kXSt8bmQrbPc74khwYvZhZAHwUCRM25I7DE1YamdQMW7K3R6CJJ6Pf//zPIkT0IvCqnJokf2yZDGTV5nR6HwCVmGUAjoKh3Uw38WHCe5zj2MG2L6gpYo="
+    on_success: always
+    on_failure: always
+    on_start: never
+
+cache:
+  yarn: true
+
+  directories:
+      - $TRAVIS_BUILD_DIR/../rispa-project
