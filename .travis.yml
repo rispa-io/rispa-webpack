@@ -9,11 +9,15 @@ git:
   depth: 1
 
 install:
-  - yarn global add @rispa/test-utils@latest
+  - yarn global add https://github.com/rispa-io/rispa-test-utils.git#feature/acceptance-test
+
+env:
+ - CI_ACCEPTANCE=true
 
 script:
   - ris-test-utils init
   - ris-test-utils run webpack lint
+  - ris-test-utils acceptance webpack-build
 
 notifications:
   slack:
