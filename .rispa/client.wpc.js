@@ -5,7 +5,6 @@ import config from '@rispa/config'
 
 export default () => createConfig([
   context => ({
-    devtool: 'cheap-module-source-map',
     plugins: [
       new CleanWebpackPlugin([config.outputPath.split(path.sep).pop()], {
         exclude: ['plugins.json'],
@@ -20,7 +19,12 @@ export default () => createConfig([
   }),
   env('development', [
     context => ({
-      entry: [require.resolve('webpack-hot-middleware/client')],
+      devtool: 'cheap-module-source-map',
+      entry: {
+        vendor: [
+          require.resolve('webpack-hot-middleware/client'),
+        ],
+      },
       plugins: [
         new context.webpack.HotModuleReplacementPlugin(),
       ],
@@ -28,11 +32,23 @@ export default () => createConfig([
   ]),
   env('production', [
     context => ({
+      devtool: false,
       plugins: [
+        new context.webpack.LoaderOptionsPlugin({
+          minimize: true,
+        }),
         new context.webpack.optimize.UglifyJsPlugin({
+          comments() {
+            return false
+          },
+          sourceMap: false,
+          minimize: true,
           compress: {
             warnings: false,
           },
+          mangle: true,
+          beautify: false,
+          evaluate: false,
         }),
       ],
     }),
