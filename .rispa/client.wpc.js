@@ -5,6 +5,7 @@ import config from '@rispa/config'
 
 export default () => createConfig([
   context => ({
+    entry: config.entryPath && [config.entryPath],
     devtool: 'cheap-module-source-map',
     plugins: [
       new CleanWebpackPlugin([config.outputPath.split(path.sep).pop()], {
