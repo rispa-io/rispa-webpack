@@ -13,6 +13,7 @@ const devServer = (app, webpackConfig) => {
     publicPath: config.output.publicPath,
     headers: { 'Access-Control-Allow-Origin': '*' },
     stats: { colors: true },
+    serverSideRender: true,
   })
 
   app.use(middleware)
