@@ -1,11 +1,11 @@
 class WebpackPluginApi {
   static startHandler(context) {
-    const instance = context.get(WebpackPluginApi.name)
+    const instance = context.get(WebpackPluginApi.pluginName)
 
-    instance.build()
+    instance.runBuild()
   }
 }
 
-WebpackPluginApi.name = '@rispa/webpack'
+WebpackPluginApi.pluginName = '@rispa/webpack'
 
 module.exports = WebpackPluginApi

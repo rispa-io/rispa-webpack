@@ -1,5 +1,4 @@
 const { init } = require('@rispa/core')
+const { startHandler } = require('../src/api')
 
-init(context => {
-  context.get('@rispa/webpack').build()
-})
+init(startHandler)

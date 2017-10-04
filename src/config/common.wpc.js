@@ -2,7 +2,7 @@ const path = require('path')
 const { group, env } = require('@webpack-blocks/webpack2')
 const config = require('@rispa/config')
 
-export default group([
+module.exports = group([
   context => ({
     context: path.resolve(__dirname, '..'),
     output: {

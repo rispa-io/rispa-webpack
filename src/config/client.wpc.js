@@ -1,9 +1,9 @@
-import path from 'path'
-import { createConfig, env } from '@webpack-blocks/webpack2'
-import CleanWebpackPlugin from 'clean-webpack-plugin'
-import config from '@rispa/config'
+const path = require('path')
+const { group, env } = require('@webpack-blocks/webpack2')
+const config = require('@rispa/config')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
-export default () => createConfig([
+module.exports = group([
   context => ({
     plugins: [
       new CleanWebpackPlugin([config.outputPath.split(path.sep).pop()], {

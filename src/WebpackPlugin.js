@@ -47,15 +47,19 @@ class WebpackPlugin extends PluginInstance {
       noInfo: true,
       hot: true,
       publicPath: config.output.publicPath,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      stats: { colors: true },
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      stats: {
+        colors: true,
+      },
     })
 
     app.use(middleware)
     app.use(webpackHotMiddleware(compiler))
   }
 
-  build() {
+  runBuild() {
     const config = createConfig(this.clientConfig)
 
     webpack(config).run((err, stats) => {
