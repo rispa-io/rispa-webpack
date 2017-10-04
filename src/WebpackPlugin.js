@@ -62,18 +62,22 @@ class WebpackPlugin extends PluginInstance {
   runBuild() {
     const config = createConfig(this.clientConfig)
 
-    webpack(config).run((err, stats) => {
-      if (err) {
-        printErrors('Failed to compile.', [err])
-        process.exit(1)
-      }
+    return new Promise((resolve, reject) => {
+      webpack(config).run((err, stats) => {
+        if (err) {
+          printErrors('Failed to compile.', [err])
+          reject()
+        }
 
-      if (stats.compilation.errors.length) {
-        printErrors('Failed to compile.', stats.compilation.errors)
-        process.exit(1)
-      }
+        if (stats.compilation.errors.length) {
+          printErrors('Failed to compile.', stats.compilation.errors)
+          reject()
+        }
 
-      log('Compiled successfully.')
+        log('Compiled successfully.')
+
+        resolve(this.context)
+      })
     })
   }
 }

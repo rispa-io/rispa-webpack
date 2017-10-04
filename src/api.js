@@ -2,7 +2,7 @@ class WebpackPluginApi {
   static startHandler(context) {
     const instance = context.get(WebpackPluginApi.pluginName)
 
-    instance.runBuild()
+    return instance.runBuild()
   }
 }
 
