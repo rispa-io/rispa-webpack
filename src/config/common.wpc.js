@@ -1,6 +1,6 @@
-import path from 'path'
-import { group, env } from '@webpack-blocks/webpack2'
-import config from '@rispa/config'
+const path = require('path')
+const { group, env } = require('@webpack-blocks/webpack2')
+const config = require('@rispa/config')
 
 export default group([
   context => ({

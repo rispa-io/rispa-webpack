@@ -1,4 +1,5 @@
-const { build } = require('@rispa/core/events')
-const core = require('@rispa/core')
+const { init } = require('@rispa/core')
 
-core(build())
+init(context => {
+  context.get('@rispa/webpack').build()
+})
