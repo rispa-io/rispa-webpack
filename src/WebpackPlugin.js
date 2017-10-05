@@ -67,16 +67,14 @@ class WebpackPlugin extends PluginInstance {
         if (err) {
           printErrors('Failed to compile.', [err])
           reject()
-        }
-
-        if (stats.compilation.errors.length) {
+        } else if (stats.compilation.errors.length) {
           printErrors('Failed to compile.', stats.compilation.errors)
           reject()
+        } else {
+          log('Compiled successfully.')
+
+          resolve(this.context)
         }
-
-        log('Compiled successfully.')
-
-        resolve(this.context)
       })
     })
   }
