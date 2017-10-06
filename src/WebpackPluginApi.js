@@ -18,6 +18,38 @@ class WebpackPluginApi extends PluginApi {
   addCommonConfig(...configs) {
     this.instance.addCommonConfig(...configs)
   }
+
+  addClientEntry(name, ...paths) {
+    if (!name || typeof name !== 'string') {
+      throw new TypeError('Entry name must be non empty string')
+    }
+
+    if (paths.length === 0) {
+      throw new TypeError('Entry path required')
+    }
+
+    this.addClientConfig(() => ({
+      entry: {
+        [name]: paths,
+      },
+    }))
+  }
+
+  addCommonEntry(name, ...paths) {
+    if (!name || typeof name !== 'string') {
+      throw new TypeError('Entry name must be non empty string')
+    }
+
+    if (paths.length === 0) {
+      throw new TypeError('Entry path required')
+    }
+
+    this.addCommonConfig(() => ({
+      entry: {
+        [name]: paths,
+      },
+    }))
+  }
 }
 
 WebpackPluginApi.pluginName = '@rispa/webpack'

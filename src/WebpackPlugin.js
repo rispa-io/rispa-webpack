@@ -5,8 +5,8 @@ const createDebug = require('debug')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
-const clientWebpackConfig = require('./config/client.wpc')
-const commonWebpackConfig = require('./config/common.wpc')
+const defaultClientWebpackConfig = require('./config/client.wpc')
+const defaultCommonWebpackConfig = require('./config/common.wpc')
 
 const log = createDebug('rispa:info:webpack')
 const logError = createDebug('rispa:error:webpack')
@@ -27,8 +27,8 @@ class WebpackPlugin extends PluginInstance {
   }
 
   start() {
-    this.addClientConfig(commonWebpackConfig, clientWebpackConfig)
-    this.addCommonConfig(commonWebpackConfig)
+    this.addClientConfig(defaultCommonWebpackConfig, defaultClientWebpackConfig)
+    this.addCommonConfig(defaultCommonWebpackConfig)
   }
 
   addClientConfig(...configs) {
