@@ -11,6 +11,10 @@ class WebpackPluginApi extends PluginApi {
     return this.instance.runBuild()
   }
 
+  devServer(app) {
+    this.instance.devServer(app)
+  }
+
   addClientConfig(...configs) {
     this.instance.addClientConfig(...configs)
   }
@@ -49,6 +53,22 @@ class WebpackPluginApi extends PluginApi {
         [name]: paths,
       },
     }))
+  }
+
+  getCommonConfig() {
+    return this.instance.getCommonConfig()
+  }
+
+  getClientConfig() {
+    return this.instance.getClientConfig()
+  }
+
+  addClientMiddleware(middleware) {
+    this.instance.addClientMiddleware(middleware)
+  }
+
+  addCommonMiddleware(middleware) {
+    this.instance.addCommonMiddleware(middleware)
   }
 }
 

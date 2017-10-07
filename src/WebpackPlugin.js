@@ -5,8 +5,8 @@ const createDebug = require('debug')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
-const defaultClientWebpackConfig = require('./config/client.wpc')
-const defaultCommonWebpackConfig = require('./config/common.wpc')
+const createDefaultClientWebpackConfig = require('./config/client.wpc')
+const createDefaultCommonWebpackConfig = require('./config/common.wpc')
 
 const log = createDebug('rispa:info:webpack')
 const logError = createDebug('rispa:error:webpack')
@@ -24,10 +24,15 @@ class WebpackPlugin extends PluginInstance {
 
     this.clientConfig = []
     this.commonConfig = []
+
+    this.clientMiddleware = []
+    this.commonMiddleware = []
   }
 
   start() {
-    this.addClientConfig(defaultCommonWebpackConfig, defaultClientWebpackConfig)
+    const defaultCommonWebpackConfig = createDefaultCommonWebpackConfig(this.config)
+
+    this.addClientConfig(defaultCommonWebpackConfig, createDefaultClientWebpackConfig(this.config))
     this.addCommonConfig(defaultCommonWebpackConfig)
   }
 
@@ -40,7 +45,7 @@ class WebpackPlugin extends PluginInstance {
   }
 
   devServer(app) {
-    const config = createConfig(this.clientConfig)
+    const config = this.getClientConfig()
     const compiler = webpack(config)
     const middleware = webpackDevMiddleware(compiler, {
       quiet: false,
@@ -60,7 +65,7 @@ class WebpackPlugin extends PluginInstance {
   }
 
   runBuild() {
-    const config = createConfig(this.clientConfig)
+    const config = this.getClientConfig()
 
     return new Promise((resolve, reject) => {
       webpack(config).run((err, stats) => {
@@ -77,6 +82,32 @@ class WebpackPlugin extends PluginInstance {
         }
       })
     })
+  }
+
+  getCommonConfig() {
+    const config = createConfig(this.commonConfig)
+    if (this.commonMiddleware.length === 0) {
+      return config
+    }
+
+    return this.commonMiddleware.reduce((result, middleware) => middleware(result), config)
+  }
+
+  getClientConfig() {
+    const config = createConfig(this.clientConfig)
+    if (this.clientMiddleware.length === 0) {
+      return config
+    }
+
+    return this.clientMiddleware.reduce((result, middleware) => middleware(result), config)
+  }
+
+  addClientMiddleware(middleware) {
+    this.clientMiddleware.push(middleware)
+  }
+
+  addCommonMiddleware(middleware) {
+    this.commonMiddleware.push(middleware)
   }
 }
 

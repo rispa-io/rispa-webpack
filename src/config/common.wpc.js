@@ -1,8 +1,7 @@
 const path = require('path')
 const { group, env } = require('@webpack-blocks/webpack2')
-const config = require('@rispa/config')
 
-module.exports = group([
+module.exports = config => group([
   context => ({
     context: path.resolve(__dirname, '..'),
     output: {
