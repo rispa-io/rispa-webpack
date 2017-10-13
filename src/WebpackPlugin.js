@@ -1,4 +1,5 @@
 const { PluginInstance } = require('@rispa/core')
+const ConfigPluginApi = require('@rispa/config').default
 const webpack = require('webpack')
 const { createConfig } = require('@webpack-blocks/webpack2')
 const createDebug = require('debug')
@@ -19,8 +20,10 @@ const printErrors = (summary, errors) => {
 }
 
 class WebpackPlugin extends PluginInstance {
-  constructor(context, config) {
-    super(context, config)
+  constructor(context) {
+    super(context)
+
+    this.config = context.get(ConfigPluginApi.pluginName).getConfig()
 
     this.clientConfig = []
     this.commonConfig = []
