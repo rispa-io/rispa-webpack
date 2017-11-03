@@ -97,7 +97,7 @@ class WebpackPlugin extends PluginInstance {
   }
 
   getClientConfig() {
-    const config = createConfig(this.clientConfig)
+    const config = createConfig(this.commonConfig.concat(this.clientConfig))
     if (this.clientMiddleware.length === 0) {
       return config
     }
