@@ -3,7 +3,7 @@ const { group, env } = require('@webpack-blocks/webpack2')
 
 module.exports = config => group([
   context => ({
-    context: path.resolve(__dirname, '..'),
+    context: path.resolve(config.outputPath, '..'),
     output: {
       path: config.outputPath,
       filename: '[name]-[chunkhash].js',
