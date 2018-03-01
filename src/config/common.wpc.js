@@ -1,5 +1,5 @@
 const path = require('path')
-const { group, env } = require('@webpack-blocks/webpack2')
+const { group, env, defineConstants } = require('@webpack-blocks/webpack2')
 
 module.exports = config => group([
   context => ({
@@ -10,11 +10,10 @@ module.exports = config => group([
       chunkFilename: '[name]-[chunkhash].js',
       publicPath: config.publicPath,
     },
-    plugins: [
-      new context.webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      }),
-    ],
+    plugins: [],
+  }),
+  defineConstants({
+    'process.env.NODE_ENV': process.env.NODE_ENV,
   }),
   env('production', [
     context => ({

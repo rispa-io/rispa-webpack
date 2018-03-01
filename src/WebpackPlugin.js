@@ -87,8 +87,8 @@ class WebpackPlugin extends PluginInstance {
     })
   }
 
-  getCommonConfig() {
-    const config = createConfig(this.commonConfig)
+  getCommonConfig(otherConfigs = []) {
+    const config = createConfig(this.commonConfig.concat(otherConfigs))
     if (this.commonMiddleware.length === 0) {
       return config
     }
@@ -96,8 +96,8 @@ class WebpackPlugin extends PluginInstance {
     return this.commonMiddleware.reduce((result, middleware) => middleware(result), config)
   }
 
-  getClientConfig() {
-    const config = createConfig(this.commonConfig.concat(this.clientConfig))
+  getClientConfig(otherConfigs = []) {
+    const config = createConfig(this.commonConfig.concat(this.clientConfig, otherConfigs))
     if (this.clientMiddleware.length === 0) {
       return config
     }
