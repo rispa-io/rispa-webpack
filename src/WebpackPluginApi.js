@@ -55,12 +55,12 @@ class WebpackPluginApi extends PluginApi {
     }))
   }
 
-  getCommonConfig() {
-    return this.instance.getCommonConfig()
+  getCommonConfig(...otherConfigs) {
+    return this.instance.getCommonConfig(otherConfigs)
   }
 
-  getClientConfig() {
-    return this.instance.getClientConfig()
+  getClientConfig(...otherConfigs) {
+    return this.instance.getClientConfig(otherConfigs)
   }
 
   addClientMiddleware(middleware) {
