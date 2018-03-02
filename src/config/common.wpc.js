@@ -2,7 +2,7 @@ const path = require('path')
 const { group, env, defineConstants } = require('@webpack-blocks/webpack2')
 
 module.exports = config => group([
-  context => ({
+  () => ({
     context: path.resolve(config.outputPath, '..'),
     output: {
       path: config.outputPath,
