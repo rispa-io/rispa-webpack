@@ -1,4 +1,6 @@
 # Rispa Webpack [![Build Status](https://api.travis-ci.org/rispa-io/rispa-webpack.svg?branch=master)](https://travis-ci.org/rispa-io/rispa-webpack)
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/rispa-io/rispa-webpack.svg)](https://greenkeeper.io/)
 **Rispa** plugin for building modules with `webpack`.
 
 ### How to use
