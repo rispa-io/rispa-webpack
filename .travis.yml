@@ -13,7 +13,7 @@ install:
 
 script:
   - ris-test-utils init
-  - ris-test-utils run webpack lint
+  - ris-test-utils run @rispa/webpack lint
 
 notifications:
   slack:
