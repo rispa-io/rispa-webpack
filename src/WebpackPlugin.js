@@ -50,10 +50,8 @@ class WebpackPlugin extends PluginInstance {
   devServer(app) {
     const config = this.getClientConfig()
     const compiler = webpack(config)
+
     const middleware = webpackDevMiddleware(compiler, {
-      quiet: false,
-      noInfo: true,
-      hot: true,
       publicPath: config.output.publicPath,
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -61,6 +59,8 @@ class WebpackPlugin extends PluginInstance {
       stats: {
         colors: true,
       },
+      logTime: true,
+      logLevel: 'warn',
     })
 
     app.use(middleware)
