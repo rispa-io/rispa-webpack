@@ -1,23 +1,20 @@
 const path = require('path')
-const { group, env } = require('@webpack-blocks/webpack2')
+const { group, env } = require('@webpack-blocks/webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = config => group([
-  context => ({
+  (context, { merge }) => merge({
     plugins: [
       new CleanWebpackPlugin([config.outputPath.split(path.sep).pop()], {
         exclude: ['plugins.json'],
         root: path.dirname(config.outputPath),
       }),
-      new context.webpack.optimize.CommonsChunkPlugin({
-        names: ['bootstrap'],
-        filename: '[name]-[hash].js',
-        minChunks: Infinity,
-      }),
     ],
+    stats: true,
   }),
   env('development', [
-    context => ({
+    (context, { merge }) => merge({
       devtool: 'cheap-module-source-map',
       entry: {
         vendor: [
@@ -30,26 +27,10 @@ module.exports = config => group([
     }),
   ]),
   env('production', [
-    context => ({
-      devtool: false,
-      plugins: [
-        new context.webpack.LoaderOptionsPlugin({
-          minimize: true,
-        }),
-        new context.webpack.optimize.UglifyJsPlugin({
-          comments() {
-            return false
-          },
-          sourceMap: false,
-          minimize: true,
-          compress: {
-            warnings: false,
-          },
-          mangle: true,
-          beautify: false,
-          evaluate: false,
-        }),
-      ],
+    (context, { merge }) => merge({
+      optimization: {
+        minimizer: [new UglifyJsPlugin()],
+      },
     }),
   ]),
 ])

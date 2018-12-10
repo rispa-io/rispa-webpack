@@ -32,7 +32,7 @@ class WebpackPluginApi extends PluginApi {
       throw new TypeError('Entry path required')
     }
 
-    this.addClientConfig(() => ({
+    this.addClientConfig((context, { merge }) => merge({
       entry: {
         [name]: paths,
       },
@@ -48,7 +48,7 @@ class WebpackPluginApi extends PluginApi {
       throw new TypeError('Entry path required')
     }
 
-    this.addCommonConfig(() => ({
+    this.addCommonConfig((context, { merge }) => merge({
       entry: {
         [name]: paths,
       },

@@ -12,13 +12,14 @@
   "dependencies": {
     "@rispa/config": "4.2.x",
     "@rispa/core": "4.2.x",
-    "@webpack-blocks/webpack2": "^0.4.0",
+    "@webpack-blocks/webpack": "^2.0.0-alpha",
     "better-npm-run": "0.1.0",
-    "clean-webpack-plugin": "^0.1.19",
+    "clean-webpack-plugin": "^1.0.0",
     "debug": "^3.1.0",
-    "webpack": "^2.7.0",
-    "webpack-dev-middleware": "^2.0.6",
-    "webpack-hot-middleware": "^2.21.2"
+    "webpack": "^4.27.1",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3",
+    "uglifyjs-webpack-plugin": "^2.0.1"
   },
   "peerDependencies": {
     "@rispa/client": "4.2.x",

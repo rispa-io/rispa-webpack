@@ -1,7 +1,7 @@
 const { PluginInstance } = require('@rispa/core')
 const ConfigPluginApi = require('@rispa/config').default
 const webpack = require('webpack')
-const { createConfig } = require('@webpack-blocks/webpack2')
+const { createConfig } = require('@webpack-blocks/webpack')
 const createDebug = require('debug')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
@@ -61,6 +61,7 @@ class WebpackPlugin extends PluginInstance {
       },
       logTime: true,
       logLevel: 'warn',
+      serverSideRender: true,
     })
 
     app.use(middleware)

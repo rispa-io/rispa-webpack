@@ -1,13 +1,13 @@
 const path = require('path')
-const { group, env, defineConstants } = require('@webpack-blocks/webpack2')
+const { group, env, defineConstants } = require('@webpack-blocks/webpack')
 
 module.exports = config => group([
-  () => ({
+  (context, { merge }) => merge({
     context: path.resolve(config.outputPath, '..'),
     output: {
       path: config.outputPath,
-      filename: '[name]-[chunkhash].js',
-      chunkFilename: '[name]-[chunkhash].js',
+      filename: '[name]-[hash].js',
+      chunkFilename: '[name]-[hash].js',
       publicPath: config.publicPath,
     },
     plugins: [],
@@ -16,17 +16,13 @@ module.exports = config => group([
     'process.env.NODE_ENV': process.env.NODE_ENV,
   }),
   env('production', [
-    context => ({
-      plugins: [
-        new context.webpack.HashedModuleIdsPlugin(),
-      ],
+    (context, { merge }) => merge({
+      mode: 'production',
     }),
   ]),
   env('development', [
-    context => ({
-      plugins: [
-        new context.webpack.NamedModulesPlugin(),
-      ],
+    (context, { merge }) => merge({
+      mode: 'development',
     }),
   ]),
 ])
