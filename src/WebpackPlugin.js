@@ -30,6 +30,8 @@ class WebpackPlugin extends PluginInstance {
 
     this.clientMiddleware = []
     this.commonMiddleware = []
+
+    this.getCompiler = this.getCompiler.bind(this)
   }
 
   start() {
@@ -45,6 +47,15 @@ class WebpackPlugin extends PluginInstance {
 
   addCommonConfig(...configs) {
     this.commonConfig = this.commonConfig.concat(configs)
+  }
+
+  getCompiler(side) {
+    if (side === 'client') {
+      const config = this.getClientConfig()
+      return webpack(config)
+    }
+    // TODO add server compiler
+    return null
   }
 
   devServer(app) {

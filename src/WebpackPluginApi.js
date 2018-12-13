@@ -23,6 +23,10 @@ class WebpackPluginApi extends PluginApi {
     this.instance.addCommonConfig(...configs)
   }
 
+  getCompiler(side) {
+    return this.instance.getCompiler(side)
+  }
+
   addClientEntry(name, ...paths) {
     if (!name || typeof name !== 'string') {
       throw new TypeError('Entry name must be non empty string')
