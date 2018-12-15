@@ -10,7 +10,6 @@ module.exports = config => group([
       chunkFilename: '[name]-[hash].js',
       publicPath: config.publicPath,
     },
-    plugins: [],
   }),
   defineConstants({
     'process.env.NODE_ENV': process.env.NODE_ENV,
