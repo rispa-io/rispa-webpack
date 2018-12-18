@@ -3,9 +3,11 @@ const { group, env } = require('@webpack-blocks/webpack')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const { StatsWriterPlugin } = require('webpack-stats-plugin')
 
 module.exports = config => group([
   (context, { merge }) => merge({
+    name: 'client',
     plugins: [
       process.env.ANALYZE_BUNDLE ? new BundleAnalyzerPlugin({
         analyzerMode: 'static',
@@ -30,6 +32,11 @@ module.exports = config => group([
       optimization: {
         minimizer: [new UglifyJsPlugin()],
       },
+      plugins: [
+        new StatsWriterPlugin({
+          filename: 'stats.json',
+        }),
+      ],
     }),
   ]),
 ])

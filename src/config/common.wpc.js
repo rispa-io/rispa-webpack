@@ -10,6 +10,15 @@ module.exports = config => group([
       chunkFilename: '[name]-[hash].js',
       publicPath: config.publicPath,
     },
+    resolve: {
+      extensions: ['.js', '.jsx', '.json'],
+    },
+    stats: {
+      children: true,
+      chunks: true,
+      modules: true,
+      reasons: true,
+    },
   }),
   defineConstants({
     'process.env.NODE_ENV': process.env.NODE_ENV,
