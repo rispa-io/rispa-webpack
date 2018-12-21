@@ -3,9 +3,6 @@ const ConfigPluginApi = require('@rispa/config').default
 const webpack = require('webpack')
 const { createConfig } = require('@webpack-blocks/webpack')
 const createDebug = require('debug')
-const webpackDevMiddleware = require('webpack-dev-middleware')
-const webpackHotMiddleware = require('webpack-hot-middleware')
-
 const createDefaultClientWebpackConfig = require('./config/client.wpc')
 const createDefaultCommonWebpackConfig = require('./config/common.wpc')
 
@@ -56,27 +53,6 @@ class WebpackPlugin extends PluginInstance {
     }
     // TODO add server compiler
     return null
-  }
-
-  devServer(app) {
-    const config = this.getClientConfig()
-    const compiler = webpack(config)
-
-    const middleware = webpackDevMiddleware(compiler, {
-      publicPath: config.output.publicPath,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-      stats: {
-        colors: true,
-      },
-      logTime: true,
-      logLevel: 'warn',
-      serverSideRender: true,
-    })
-
-    app.use(middleware)
-    app.use(webpackHotMiddleware(compiler))
   }
 
   runBuild() {
