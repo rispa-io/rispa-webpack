@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const { createConfig } = require('@webpack-blocks/webpack')
 const createDebug = require('debug')
 const createDefaultClientWebpackConfig = require('./config/client.wpc')
+const createDefaultServerWebpackConfig = require('./config/server.wpc')
 const createDefaultCommonWebpackConfig = require('./config/common.wpc')
 
 const log = createDebug('rispa:info:webpack')
@@ -23,9 +24,11 @@ class WebpackPlugin extends PluginInstance {
     this.config = context.get(ConfigPluginApi.pluginName).getConfig()
 
     this.clientConfig = []
+    this.serverConfig = []
     this.commonConfig = []
 
     this.clientMiddleware = []
+    this.serverMiddleware = []
     this.commonMiddleware = []
 
     this.getCompiler = this.getCompiler.bind(this)
@@ -35,6 +38,7 @@ class WebpackPlugin extends PluginInstance {
     const defaultCommonWebpackConfig = createDefaultCommonWebpackConfig(this.config)
 
     this.addClientConfig(defaultCommonWebpackConfig, createDefaultClientWebpackConfig(this.config))
+    this.addServerConfig(defaultCommonWebpackConfig, createDefaultServerWebpackConfig(this.config))
     this.addCommonConfig(defaultCommonWebpackConfig)
   }
 
@@ -46,13 +50,13 @@ class WebpackPlugin extends PluginInstance {
     this.commonConfig = this.commonConfig.concat(configs)
   }
 
+  addServerConfig(...configs) {
+    this.serverConfig = this.serverConfig.concat(configs)
+  }
+
   getCompiler(side) {
-    if (side === 'client') {
-      const config = this.getClientConfig()
-      return webpack(config)
-    }
-    // TODO add server compiler
-    return null
+    const config = side === 'client' ? this.getClientConfig() : this.serverConfig()
+    return webpack(config)
   }
 
   runBuild() {
@@ -85,12 +89,20 @@ class WebpackPlugin extends PluginInstance {
   }
 
   getClientConfig(otherConfigs = []) {
-    const config = createConfig(this.commonConfig.concat(this.clientConfig, otherConfigs))
-    if (this.clientMiddleware.length === 0) {
-      return config
+    return this.getConfig(this.clientConfig, this.clientMiddleware, otherConfigs)
+  }
+
+  getServerConfig(otherConfigs = []) {
+    return this.getConfig(this.serverConfig, this.serverMiddleware, otherConfigs)
+  }
+
+  getConfig(config, middlewares, otherConfigs = []) {
+    const webpackConfig = createConfig(this.commonConfig.concat(config, otherConfigs))
+    if (middlewares.length === 0) {
+      return webpackConfig
     }
 
-    return this.clientMiddleware.reduce((result, middleware) => middleware(result), config)
+    return middlewares.reduce((result, middleware) => middleware(result), webpackConfig)
   }
 
   addClientMiddleware(middleware) {
@@ -99,6 +111,10 @@ class WebpackPlugin extends PluginInstance {
 
   addCommonMiddleware(middleware) {
     this.commonMiddleware.push(middleware)
+  }
+
+  addServerMiddleware(middleware) {
+    this.serverMiddleware.push(middleware)
   }
 }
 
