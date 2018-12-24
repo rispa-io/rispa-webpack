@@ -13,10 +13,8 @@
     "@rispa/config": "4.2.x",
     "@rispa/core": "4.2.x",
     "@webpack-blocks/webpack": "^2.0.0-alpha",
-    "better-npm-run": "0.1.0",
     "clean-webpack-plugin": "^1.0.0",
-    "debug": "^3.1.0",
-    "webpack": "^4.27.1",
+    "webpack": "^4.28.2",
     "webpack-stats-plugin": "^0.2.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "uglifyjs-webpack-plugin": "^2.0.1"
@@ -27,17 +25,8 @@
     "@rispa/webpack-javascript": "4.2.x"
   },
   "scripts": {
-    "build": "better-npm-run build",
     "lint": "rispa-eslint .",
-    "lint:fix": "rispa-eslint . --fix"
-  },
-  "betterScripts": {
-    "build": {
-      "command": "node ./bin/build.js",
-      "env": {
-        "NODE_ENV": "production",
-        "DEBUG": "rispa:*"
-      }
-    }
+    "lint:fix": "rispa-eslint . --fix",
+    "build": "NODE_ENV=production node ./bin/build.js"
   }
 }

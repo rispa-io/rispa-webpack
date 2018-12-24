@@ -13,12 +13,6 @@ module.exports = config => group([
     resolve: {
       extensions: ['.js', '.jsx', '.json'],
     },
-    stats: {
-      children: true,
-      chunks: true,
-      modules: true,
-      reasons: true,
-    },
   }),
   defineConstants({
     'process.env.NODE_ENV': process.env.NODE_ENV,

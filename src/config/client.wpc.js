@@ -15,6 +15,7 @@ module.exports = config => group([
       new CleanWebpackPlugin([config.outputPath.split(path.sep).pop()], {
         exclude: ['plugins.json'],
         root: path.dirname(config.outputPath),
+        verbose: false,
       }),
     ].filter(Boolean),
     stats: true,

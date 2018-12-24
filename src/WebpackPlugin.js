@@ -1,21 +1,47 @@
-const { PluginInstance } = require('@rispa/core')
+const { PluginInstance, createLogger } = require('@rispa/core')
 const ConfigPluginApi = require('@rispa/config').default
 const webpack = require('webpack')
 const { createConfig } = require('@webpack-blocks/webpack')
-const createDebug = require('debug')
-const webpackDevMiddleware = require('webpack-dev-middleware')
-const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const createDefaultClientWebpackConfig = require('./config/client.wpc')
 const createDefaultCommonWebpackConfig = require('./config/common.wpc')
 
-const log = createDebug('rispa:info:webpack')
-const logError = createDebug('rispa:error:webpack')
+const logger = createLogger('@rispa/webpack')
 
-const printErrors = (summary, errors) => {
-  logError(summary)
-  errors.forEach(err => {
-    logError(err.message || err)
+function runCompiler(compiler) {
+  return new Promise((resolve, reject) => {
+    // eslint-disable-next-line complexity
+    compiler.run((err, stats) => {
+      if (err) {
+        logger.error(err.stack || err)
+        if (err.details) {
+          logger.error(err.details)
+        }
+
+        reject(err)
+      }
+
+      const statsString = stats.toString({
+        colors: true,
+      })
+      if (statsString) {
+        logger.info(statsString)
+      }
+
+      if (stats.hasErrors()) {
+        logger.error(logger.colors.red('Failed to compile.'))
+
+        reject()
+      } else if (stats.hasWarnings()) {
+        logger.warn(logger.colors.yellow('Compiled with warnings.'))
+
+        resolve()
+      } else {
+        logger.info(logger.colors.green('Compiled successfully.'))
+
+        resolve()
+      }
+    })
   })
 }
 
@@ -27,11 +53,6 @@ class WebpackPlugin extends PluginInstance {
 
     this.clientConfig = []
     this.commonConfig = []
-
-    this.clientMiddleware = []
-    this.commonMiddleware = []
-
-    this.getCompiler = this.getCompiler.bind(this)
   }
 
   start() {
@@ -49,80 +70,28 @@ class WebpackPlugin extends PluginInstance {
     this.commonConfig = this.commonConfig.concat(configs)
   }
 
-  getCompiler(side) {
-    if (side === 'client') {
-      const config = this.getClientConfig()
-      return webpack(config)
-    }
-    // TODO add server compiler
-    return null
-  }
+  getClientCompiler(otherConfigs) {
+    const config = this.getClientConfig(otherConfigs)
 
-  devServer(app) {
-    const config = this.getClientConfig()
-    const compiler = webpack(config)
-
-    const middleware = webpackDevMiddleware(compiler, {
-      publicPath: config.output.publicPath,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-      stats: {
-        colors: true,
-      },
-      logTime: true,
-      logLevel: 'warn',
-      serverSideRender: true,
-    })
-
-    app.use(middleware)
-    app.use(webpackHotMiddleware(compiler))
+    return webpack(config)
   }
 
   runBuild() {
-    const config = this.getClientConfig()
+    const compiler = this.getClientCompiler()
 
-    return new Promise((resolve, reject) => {
-      webpack(config).run((err, stats) => {
-        if (err) {
-          printErrors('Failed to compile.', [err])
-          reject()
-        } else if (stats.compilation.errors.length) {
-          printErrors('Failed to compile.', stats.compilation.errors)
-          reject()
-        } else {
-          log('Compiled successfully.')
-
-          resolve(this.context)
-        }
-      })
-    })
+    return runCompiler(compiler)
   }
 
   getCommonConfig(otherConfigs = []) {
     const config = createConfig(this.commonConfig.concat(otherConfigs))
-    if (this.commonMiddleware.length === 0) {
-      return config
-    }
 
-    return this.commonMiddleware.reduce((result, middleware) => middleware(result), config)
+    return config
   }
 
   getClientConfig(otherConfigs = []) {
     const config = createConfig(this.commonConfig.concat(this.clientConfig, otherConfigs))
-    if (this.clientMiddleware.length === 0) {
-      return config
-    }
 
-    return this.clientMiddleware.reduce((result, middleware) => middleware(result), config)
-  }
-
-  addClientMiddleware(middleware) {
-    this.clientMiddleware.push(middleware)
-  }
-
-  addCommonMiddleware(middleware) {
-    this.commonMiddleware.push(middleware)
+    return config
   }
 }
 
