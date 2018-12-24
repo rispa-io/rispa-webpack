@@ -36,6 +36,7 @@ module.exports = config => group([
       plugins: [
         new StatsWriterPlugin({
           filename: 'stats.json',
+          fields: ['assetsByChunkName'],
         }),
       ],
     }),

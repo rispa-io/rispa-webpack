@@ -9,6 +9,8 @@ const createDefaultCommonWebpackConfig = require('./config/common.wpc')
 const logger = createLogger('@rispa/webpack')
 
 function runCompiler(compiler) {
+  logger.info('Compiling...')
+
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line complexity
     compiler.run((err, stats) => {
