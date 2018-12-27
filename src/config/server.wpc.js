@@ -9,8 +9,7 @@ module.exports = config => group([
 
     output: {
       path: path.resolve(config.outputPath, 'server'),
-      filename: '[name]-[hash].js',
-      chunkFilename: '[name]-[hash].chunk.js',
+      filename: '[name].js',
     },
 
     externals: [nodeExternals()],
