@@ -17,6 +17,7 @@
     "webpack": "^4.28.2",
     "webpack-stats-plugin": "^0.2.1",
     "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-node-externals": "^1.7.2",
     "uglifyjs-webpack-plugin": "^2.0.1"
   },
   "peerDependencies": {
@@ -27,7 +28,8 @@
   "scripts": {
     "lint": "rispa-eslint .",
     "lint:fix": "rispa-eslint . --fix",
-    "build": "NODE_ENV=production node ./bin/build.js",
+    "build:client": "NODE_ENV=production TARGET_ENV=client node ./bin/build.js",
+    "build:server": "NODE_ENV=production TARGET_ENV=server node ./bin/build.js",
     "analyze": "ANALYZE_BUNDLE=true NODE_ENV=production node ./bin/build.js"
   }
 }

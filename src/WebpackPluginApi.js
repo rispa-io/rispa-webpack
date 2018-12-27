@@ -15,6 +15,10 @@ class WebpackPluginApi extends PluginApi {
     this.instance.addClientConfig(...configs)
   }
 
+  addServerConfig(...configs) {
+    this.instance.addServerConfig(...configs)
+  }
+
   addCommonConfig(...configs) {
     this.instance.addCommonConfig(...configs)
   }
@@ -23,12 +27,20 @@ class WebpackPluginApi extends PluginApi {
     return this.instance.getClientCompiler(otherConfigs)
   }
 
+  getServerCompiler(otherConfigs) {
+    return this.instance.getServerCompiler(otherConfigs)
+  }
+
   getCommonConfig(...otherConfigs) {
     return this.instance.getCommonConfig(otherConfigs)
   }
 
   getClientConfig(...otherConfigs) {
     return this.instance.getClientConfig(otherConfigs)
+  }
+
+  getServerConfig(...otherConfigs) {
+    return this.instance.getServerConfig(otherConfigs)
   }
 }
 

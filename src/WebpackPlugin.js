@@ -5,6 +5,7 @@ const { createConfig } = require('@webpack-blocks/webpack')
 
 const createDefaultClientWebpackConfig = require('./config/client.wpc')
 const createDefaultCommonWebpackConfig = require('./config/common.wpc')
+const createDefaultServerWebpackConfig = require('./config/server.wpc')
 
 const logger = createLogger('@rispa/webpack')
 
@@ -55,17 +56,23 @@ class WebpackPlugin extends PluginInstance {
 
     this.clientConfig = []
     this.commonConfig = []
+    this.serverConfig = []
   }
 
   start() {
     const defaultCommonWebpackConfig = createDefaultCommonWebpackConfig(this.config)
 
     this.addClientConfig(createDefaultClientWebpackConfig(this.config))
+    this.addServerConfig(createDefaultServerWebpackConfig(this.config))
     this.addCommonConfig(defaultCommonWebpackConfig)
   }
 
   addClientConfig(...configs) {
     this.clientConfig = this.clientConfig.concat(configs)
+  }
+
+  addServerConfig(...configs) {
+    this.serverConfig = this.serverConfig.concat(configs)
   }
 
   addCommonConfig(...configs) {
@@ -78,8 +85,14 @@ class WebpackPlugin extends PluginInstance {
     return webpack(config)
   }
 
+  getServerCompiler(otherConfigs) {
+    const config = this.getServerConfig(otherConfigs)
+
+    return webpack(config)
+  }
+
   runBuild() {
-    const compiler = this.getClientCompiler()
+    const compiler = process.env.TARGET_ENV === 'client' ? this.getClientCompiler() : this.getServerCompiler()
 
     return runCompiler(compiler)
   }
@@ -92,6 +105,12 @@ class WebpackPlugin extends PluginInstance {
 
   getClientConfig(otherConfigs = []) {
     const config = createConfig(this.commonConfig.concat(this.clientConfig, otherConfigs))
+
+    return config
+  }
+
+  getServerConfig(otherConfigs = []) {
+    const config = createConfig(this.commonConfig.concat(this.serverConfig, otherConfigs))
 
     return config
   }
