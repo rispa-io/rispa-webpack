@@ -92,7 +92,7 @@ class WebpackPlugin extends PluginInstance {
   }
 
   runBuild() {
-    const compiler = this.getClientCompiler()
+    const compiler = process.env.TARGET_ENV === 'client' ? this.getClientCompiler() : this.getServerCompiler()
 
     return runCompiler(compiler)
   }
