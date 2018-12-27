@@ -23,38 +23,6 @@ class WebpackPluginApi extends PluginApi {
     return this.instance.getClientCompiler(otherConfigs)
   }
 
-  addClientEntry(name, ...paths) {
-    if (!name || typeof name !== 'string') {
-      throw new TypeError('Entry name must be non empty string')
-    }
-
-    if (paths.length === 0) {
-      throw new TypeError('Entry path required')
-    }
-
-    this.addClientConfig((context, { merge }) => merge({
-      entry: {
-        [name]: paths,
-      },
-    }))
-  }
-
-  addCommonEntry(name, ...paths) {
-    if (!name || typeof name !== 'string') {
-      throw new TypeError('Entry name must be non empty string')
-    }
-
-    if (paths.length === 0) {
-      throw new TypeError('Entry path required')
-    }
-
-    this.addCommonConfig((context, { merge }) => merge({
-      entry: {
-        [name]: paths,
-      },
-    }))
-  }
-
   getCommonConfig(...otherConfigs) {
     return this.instance.getCommonConfig(otherConfigs)
   }

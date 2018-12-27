@@ -60,7 +60,7 @@ class WebpackPlugin extends PluginInstance {
   start() {
     const defaultCommonWebpackConfig = createDefaultCommonWebpackConfig(this.config)
 
-    this.addClientConfig(defaultCommonWebpackConfig, createDefaultClientWebpackConfig(this.config))
+    this.addClientConfig(createDefaultClientWebpackConfig(this.config))
     this.addCommonConfig(defaultCommonWebpackConfig)
   }
 
