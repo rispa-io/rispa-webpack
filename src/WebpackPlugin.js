@@ -92,7 +92,7 @@ class WebpackPlugin extends PluginInstance {
   }
 
   runBuild() {
-    const compiler = this.getServerCompiler()
+    const compiler = this.getClientCompiler()
 
     return runCompiler(compiler)
   }
