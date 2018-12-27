@@ -17,12 +17,6 @@ module.exports = config => group([
       chunkFilename: '[name]-[hash].chunk.js',
     },
 
-    // Default entries
-    entry: {
-      vendors: [],
-      client: [],
-    },
-
     plugins: [
       // Visualize size of webpack output files with an interactive zoomable treemap
       // https://github.com/webpack-contrib/webpack-bundle-analyzer
