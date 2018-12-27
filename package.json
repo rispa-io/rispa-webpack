@@ -17,6 +17,7 @@
     "webpack": "^4.28.2",
     "webpack-stats-plugin": "^0.2.1",
     "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-node-externals": "^1.7.2",
     "uglifyjs-webpack-plugin": "^2.0.1"
   },
   "peerDependencies": {
