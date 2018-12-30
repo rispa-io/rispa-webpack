@@ -91,8 +91,18 @@ class WebpackPlugin extends PluginInstance {
     return webpack(config)
   }
 
+  getCompiler(target) {
+    if (target === 'client') {
+      return this.getClientCompiler()
+    } else if (target === 'server') {
+      return this.getServerCompiler()
+    }
+
+    throw new Error('Invalid `process.env.TARGET_ENV`, must be `client` or `server`')
+  }
+
   runBuild() {
-    const compiler = process.env.TARGET_ENV === 'client' ? this.getClientCompiler() : this.getServerCompiler()
+    const compiler = this.getCompiler(process.env.TARGET_ENV)
 
     return runCompiler(compiler)
   }

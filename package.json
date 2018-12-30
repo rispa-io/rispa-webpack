@@ -30,6 +30,6 @@
     "lint:fix": "rispa-eslint . --fix",
     "build:client": "NODE_ENV=production TARGET_ENV=client node ./bin/build.js",
     "build:server": "NODE_ENV=production TARGET_ENV=server node ./bin/build.js",
-    "analyze": "ANALYZE_BUNDLE=true NODE_ENV=production node ./bin/build.js"
+    "analyze": "ANALYZE_BUNDLE=true NODE_ENV=production TARGET_ENV=client node ./bin/build.js"
   }
 }
